@@ -1,6 +1,6 @@
 package com.example.learningkafka;
 
-import com.example.core.ProductCreatedEvent;
+import com.example.core.ActionCreatedEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class IdempotenceProducerIntegrationTest {
 
     @Autowired
-    private KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate;
+    private KafkaTemplate<String, ActionCreatedEvent> kafkaTemplate;
 
     @MockitoBean //KafkaAdmin создает топики, а т.к. тест не работает с топиками, то можно ускорить его выполнение
     KafkaAdmin kafkaAdmin;
 
     @Test
     void ProducerConfigTest_is_idempotent(){
-        ProducerFactory<String, ProductCreatedEvent> producerFactory = kafkaTemplate.getProducerFactory();
+        ProducerFactory<String, ActionCreatedEvent> producerFactory = kafkaTemplate.getProducerFactory();
 
 
         Map<String, Object> config = producerFactory.getConfigurationProperties();

@@ -2,7 +2,7 @@ package com.example.learningkafka.controller;
 
 
 import com.example.learningkafka.service.ProductService;
-import com.example.learningkafka.service.dto.CreateProductDTO;
+import com.example.learningkafka.service.dto.UserActionDTO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +27,16 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<Object> createProduct(@RequestBody CreateProductDTO createProductDTO) {
-        String productID = null;
+    public ResponseEntity<Object> createProduct(@RequestBody UserActionDTO userActionDTO) {
+        String actionID = null;
         try {
-            productID = productService.createProduct(createProductDTO);
+            actionID = productService.createAction(userActionDTO);
         } catch (ExecutionException | InterruptedException e) {
             logger.error(e.getMessage(), e);
              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                      .body(new ErrorMessage(new Date(), e.getMessage()));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(productID);
+        return ResponseEntity.status(HttpStatus.CREATED).body(actionID);
     }
 
 }

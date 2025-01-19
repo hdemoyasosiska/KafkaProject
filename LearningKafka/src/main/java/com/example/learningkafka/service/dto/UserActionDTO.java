@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class CreateProductDTO {
-    private final String title;
-    private final BigDecimal price;
-    private final Integer quantity;
+public class UserActionDTO {
+    private final String genre;
+    private final Boolean liked;
 }

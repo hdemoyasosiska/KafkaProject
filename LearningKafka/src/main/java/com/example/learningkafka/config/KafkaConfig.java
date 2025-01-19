@@ -1,7 +1,7 @@
 package com.example.learningkafka.config;
 
 
-import com.example.core.ProductCreatedEvent;
+import com.example.core.ActionCreatedEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,13 +50,13 @@ public class KafkaConfig {
     }
 
     @Bean
-    ProducerFactory<String, ProductCreatedEvent> producerFactory(){
+    ProducerFactory<String, ActionCreatedEvent> producerFactory(){
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate(){
-        return new KafkaTemplate<String, ProductCreatedEvent>(producerFactory());
+    KafkaTemplate<String, ActionCreatedEvent> kafkaTemplate(){
+        return new KafkaTemplate<String, ActionCreatedEvent>(producerFactory());
     }
 
 

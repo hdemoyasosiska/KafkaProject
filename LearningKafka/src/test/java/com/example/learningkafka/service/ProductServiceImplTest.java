@@ -1,8 +1,8 @@
 package com.example.learningkafka.service;
 
 
-import com.example.core.ProductCreatedEvent;
-import com.example.learningkafka.service.dto.CreateProductDTO;
+import com.example.core.ActionCreatedEvent;
+import com.example.learningkafka.service.dto.UserActionDTO;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
@@ -52,8 +51,8 @@ public class ProductServiceImplTest {
     @Autowired
     private EmbeddedKafkaBroker embeddedKafkaBroker;
 
-    private KafkaMessageListenerContainer<String, ProductCreatedEvent> container;
-    private BlockingQueue<ConsumerRecord<String, ProductCreatedEvent>> records;
+    private KafkaMessageListenerContainer<String, ActionCreatedEvent> container;
+    private BlockingQueue<ConsumerRecord<String, ActionCreatedEvent>> records;
 
     @BeforeAll
     void setUp(){
@@ -65,26 +64,26 @@ public class ProductServiceImplTest {
         container = new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
         records = new LinkedBlockingQueue<>(); // сюда попадает всё, что записывается в топик
 
-        container.setupMessageListener((MessageListener<String, ProductCreatedEvent>) records::add);
+        container.setupMessageListener((MessageListener<String, ActionCreatedEvent>) records::add);
         container.start();
         ContainerTestUtils.waitForAssignment(container, embeddedKafkaBroker.getPartitionsPerTopic());
     }
     @Test
     void test_createProduct_successfully_send() throws ExecutionException, InterruptedException {
 
-        CreateProductDTO createProductDTO = new CreateProductDTO("aBC", BigDecimal.valueOf(10), 11);
+        UserActionDTO userActionDTO = new UserActionDTO("aBC", BigDecimal.valueOf(10), 11);
 
 
-        productService.createProduct(createProductDTO);
+        productService.createAction(userActionDTO);
 
 
-        ConsumerRecord<String, ProductCreatedEvent> message = records.poll(3000, TimeUnit.MILLISECONDS);
+        ConsumerRecord<String, ActionCreatedEvent> message = records.poll(3000, TimeUnit.MILLISECONDS);
         assertNotNull(message);
         assertNotNull(message.key());
-        ProductCreatedEvent event = message.value();
-        assertEquals(createProductDTO.getQuantity(), event.getQuantity());
-        assertEquals(createProductDTO.getTitle(), event.getTitle());
-        assertEquals(createProductDTO.getPrice(), event.getPrice());
+        ActionCreatedEvent event = message.value();
+        assertEquals(userActionDTO.getQuantity(), event.getQuantity());
+        assertEquals(userActionDTO.getTitle(), event.getGenre());
+        assertEquals(userActionDTO.getPrice(), event.getPrice());
     }
 
     private Map<String, Object> getConsumerProperties(){

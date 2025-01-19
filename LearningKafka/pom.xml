@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>LearningKafka</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>LearningKafka</name>
-    <description>LearningKafka</description>
+    <name>ProducerOfUserActions</name>
+    <description>ProducerOfUserActions</description>
     <url/>
     <licenses>
         <license/>
