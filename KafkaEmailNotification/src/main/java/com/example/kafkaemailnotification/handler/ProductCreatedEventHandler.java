@@ -22,6 +22,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Component
 @KafkaListener(topics = "user-actions-topic")
@@ -47,7 +48,7 @@ public class ProductCreatedEventHandler {
     @KafkaHandler //маппит по входным агрументам метода
     public void handle(@Payload ActionCreatedEvent actionCreatedEvent,
                        @Header("messageId") String messageId,
-                       @Header(KafkaHeaders.RECEIVED_KEY) String messageKey){
+                       @Header(KafkaHeaders.RECEIVED_KEY) String messageKey) throws ExecutionException, InterruptedException {
 
         ProcessedEventEntity eventEntity = processedEventRepository.findByMessageId(messageId);
         userActionService.processUserAction(actionCreatedEvent, sessionID);

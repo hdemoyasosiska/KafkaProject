@@ -8,17 +8,23 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="core" />
+        <module name="KafkaFrontend" />
         <module name="LearningKafka" />
         <module name="KafkaEmailNotification" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="KafkaEmailNotification (1)" target="17" />
+      <module name="KafkaEmailNotification (2)" target="17" />
       <module name="KafkaEmailNotifications" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="KafkaEmailNotification" options="-parameters" />
+      <module name="KafkaEmailNotification (1)" options="-parameters" />
+      <module name="KafkaEmailNotification (2)" options="-parameters" />
+      <module name="KafkaFrontend" options="-parameters" />
       <module name="LearningKafka" options="-parameters" />
       <module name="core" options="-parameters" />
     </option>

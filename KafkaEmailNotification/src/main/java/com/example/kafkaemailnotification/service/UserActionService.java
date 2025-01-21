@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserActionService {
@@ -26,9 +27,10 @@ public class UserActionService {
                              MovieRecommendationService movieRecommendationService) {
         this.userPreferenceRepository = userPreferenceRepository;
         this.movieRecommendationService = movieRecommendationService;
+
     }
 
-    public void processUserAction(ActionCreatedEvent actionCreatedEvent, String sessionId) {
+    public void processUserAction(ActionCreatedEvent actionCreatedEvent, String sessionId) throws ExecutionException, InterruptedException {
         UserPreferences userPreferences = userPreferenceRepository.findBySessionId(sessionId)
                 .orElse(new UserPreferences(sessionId));
 
@@ -50,7 +52,9 @@ public class UserActionService {
 
         // 3. Сохраняем обновленные предпочтения
         userPreferenceRepository.save(userPreferences);
-        movieRecommendationService.generateRecommendations(userPreferences);
+        String recommendedMovie = movieRecommendationService.generateRecommendations(userPreferences);
+
+
 
 
         logger.info("Updated preferences for session {}", sessionId);

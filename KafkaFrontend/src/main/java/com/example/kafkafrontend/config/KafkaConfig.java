@@ -1,8 +1,8 @@
-package com.example.kafkaemailnotification.config;
+package com.example.kafkafrontend.config;
 
+import com.example.kafkafrontend.exception.NonRetryableException;
+import com.example.kafkafrontend.exception.RetryableException;
 
-import com.example.kafkaemailnotification.exception.NonRetryableException;
-import com.example.kafkaemailnotification.exception.RetryableException;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -64,7 +64,7 @@ public class KafkaConfig {
                 = new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory);
-        factory.setCommonErrorHandler(defaultErrorHandler);
+        //factory.setCommonErrorHandler(defaultErrorHandler);
 
         return factory;
     }
@@ -88,3 +88,4 @@ public class KafkaConfig {
 
 
 }
+
