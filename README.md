@@ -10,4 +10,4 @@ Spring Framework, Spring Boot, Spring Kafka, H2 database, Lombok, JUnit, Mockito
 ## Функциональность
 Пользователь нажимает "нравится" или "не нравится" на фильмах, и на этой основе ему присылаются новые фильмы для оценки
 
-![Иллюстрация к проекту](https://github.com/hdemoyasosiska/hand_made_store/raw/main/image.png)
+![Иллюстрация к проекту](https://github.com/hdemoyasosiska/KafkaProject/raw/main/image.png)
